@@ -24,30 +24,30 @@ class HelloWorldController(_restWrapper: RestTemplateWrapper) {
     fun printLog() = logger.info("haha")
 
     @DeleteMapping("delete/{id}")
-    fun deleteById(@PathVariable("id") id: String): ResponseEntity<RestfulResponse> {
+    fun deleteById(@PathVariable("id") id: String): ResponseEntity<RestfulResponse<Any>> {
         print("根据id $id 删除成功")
         return ok(id)
     }
 
     @DeleteMapping("delete")
-    fun deleteByObject(@RequestBody user: User): ResponseEntity<RestfulResponse> {
-        var user1 = user.copy(age = 100)
+    fun deleteByObject(@RequestBody user: User): ResponseEntity<RestfulResponse<Any>> {
+        val user1 = user.copy(age = 100)
         return ok(user1)
     }
 
     @DeleteMapping("delete1")
-    fun deleteByParam(@RequestParam("id") id: String): ResponseEntity<RestfulResponse> {
+    fun deleteByParam(@RequestParam("id") id: String): ResponseEntity<RestfulResponse<Any>> {
         print("根据id参数 $id 删除成功")
         return ok(id)
     }
 
     @PutMapping("put")
-    fun doPut(@RequestBody user: User): ResponseEntity<RestfulResponse> {
+    fun doPut(@RequestBody user: User): ResponseEntity<RestfulResponse<Any>> {
         return ok(user.copy(name = "dabao", age = 22))
     }
 
     @GetMapping("test")
-    fun test(): ResponseEntity<RestfulResponse> {
+    fun test(): ResponseEntity<RestfulResponse<Any>> {
         val user: User = User("Tony", 20)
         val response = restWrapper.put("http://localhost:8080/demo/put", user)
         return ok(response.getData())

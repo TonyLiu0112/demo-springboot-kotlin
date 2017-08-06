@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 class UserController(val userService: UserService) {
 
     @GetMapping("users")
-    fun getAllUser(): ResponseEntity<RestfulResponse> {
+    fun getAllUser(): ResponseEntity<RestfulResponse<Any>> {
         return RestfulBuilder.ok(userService.getAllUser())
     }
 
