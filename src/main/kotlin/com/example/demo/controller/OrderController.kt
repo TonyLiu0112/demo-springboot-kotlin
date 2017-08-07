@@ -42,7 +42,7 @@ class OrderController {
 
     @DeleteMapping("orders/{id}")
     fun delete1(@PathVariable("id") id: Long): ResponseEntity<RestfulResponse<Any>> {
-        return RestfulBuilder.deleted("success to remove ${id}")
+        return RestfulBuilder.deleted("success to remove $id")
     }
 
     @DeleteMapping("orders")
