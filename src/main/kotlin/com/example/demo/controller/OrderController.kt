@@ -2,6 +2,7 @@ package com.example.demo.controller
 
 import com.example.demo.service.bean.OrderResponse
 import com.example.demo.service.bean.OrderResquest
+import com.wrench.utils.restfulapi.response.ErrorResponse
 import com.wrench.utils.restfulapi.response.RestfulBuilder
 import com.wrench.utils.restfulapi.response.RestfulResponse
 import org.springframework.http.ResponseEntity
@@ -13,11 +14,18 @@ class OrderController {
 
     @GetMapping("orders/{id}")
     fun getOrder(@PathVariable("id") id: Long): ResponseEntity<RestfulResponse<Any>> {
-        val order = OrderResponse()
-        order.id = id
-        order.orderName = "满汉全席"
-        order.time = "2017-09-09"
-        return RestfulBuilder.ok(order)
+        if (id == 1L) {
+            val order = OrderResponse()
+            order.id = id
+            order.orderName = "满汉全席"
+            order.time = "2017-09-09"
+            return RestfulBuilder.ok(order)
+        } else {
+            val errorRes = ErrorResponse()
+            errorRes.code = "T001"
+            errorRes.message = "密码错误"
+            return RestfulBuilder.badRequest(errorRes)
+        }
     }
 
     @GetMapping("orders")
@@ -28,7 +36,7 @@ class OrderController {
         order.orderName = "好酒好肉"
         order.time = "2017-01-01"
         list.add(order)
-        return RestfulBuilder.ok(list)
+        return RestfulBuilder.ok(list, "获取列表成功")
     }
 
     @PostMapping("orders")
